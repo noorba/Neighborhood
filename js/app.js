@@ -138,14 +138,7 @@
                     );
                 });
 
-                this.htmlContent = '<div>' + '<h4 class="iw_title">' + marker.title +
-                    '</h4>';
-
-                infowindow.open(map, marker);
-
-                infowindow.addListener('closeclick', function() {
-                    infowindow.marker = null;
-                });
+                
             }
         };
 
