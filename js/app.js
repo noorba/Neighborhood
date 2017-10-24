@@ -26,31 +26,31 @@
 
           },
           {
-              title: 'Shinguku',
-
-              lat: 35.6251216,
-              lng: 139.7754499
-
-          },
-          {
-              title: 'Gundam statu',
+              title: 'Shibuya',
 
               lat: 35.6617773,
               lng: 139.7040506
 
           },
           {
-              title: 'Shibua',
+              title: 'Tokyo Imperial Palace',
 
-              lat: 35.7100627,
-              lng: 139.8107004
+              lat: 35.685175,
+              lng: 139.7527995
+
+          },
+          {
+              title: 'Fuji-San',
+
+              lat: 35.3605555,
+              lng: 138.7277777
 
           },
           {
               title: 'Sky Tree Tower',
 
-              lat: 35.685175,
-              lng: 139.7527995
+              lat: 35.7100627,
+              lng: 139.8107004
 
           }
       ];
@@ -123,8 +123,10 @@
               var response = marker.response.venues[0];
               this.street = response.location.formattedAddress[0];
               this.city = response.location.formattedAddress[1];
-              this.country = response.location.formattedAddress[4];
+              this.country = response.location.formattedAddress[3];
               this.category = response.categories[0].shortName;
+			  
+		
 
               this.htmlContentFoursquare =
                   '<h5>(' + this.category +
@@ -134,8 +136,9 @@
                   '<p>' + this.city + '</p>' +
                   '<p>' + this.country +
                   '</p>' + '</div>' + '</div>';
+				  
 
-              infowindow.setContent(this.htmlContent + this.htmlContentFoursquare);
+              infowindow.setContent( this.htmlContentFoursquare);
           }).fail(function() {
               // Send alert
               alert(
