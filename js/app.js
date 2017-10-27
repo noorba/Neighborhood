@@ -1,23 +1,9 @@
   var map;
 
-  var self = this;
+ // var self = this;
   // Create a new blank array for all the listing markers.
   var markers = [];
-
-  function initMap() {
-      // Constructor creates a new map - only center and zoom are required.
-      map = new google.maps.Map(document.getElementById('map'), {
-          center: {
-              lat: 35.6894875,
-              lng: 139.6917064
-          },
-          zoom: 13,
-          mapTypeControl: false
-      });
-
-
-
-      var locations = [{
+ var locations = [{
 
 
               title: 'Akihabara',
@@ -42,8 +28,8 @@
           {
               title: 'Fuji-San',
 
-              lat: 35.3605555,
-              lng: 138.7277777
+              lat: 35.62504620000001,
+              lng: 139.7754533
 
           },
           {
@@ -54,6 +40,21 @@
 
           }
       ];
+	  
+  function initMap() {
+      // Constructor creates a new map - only center and zoom are required.
+      map = new google.maps.Map(document.getElementById('map'), {
+          center: {
+              lat: 35.6894875,
+              lng: 139.6917064
+          },
+          zoom: 13,
+          mapTypeControl: false
+      });
+
+
+
+     
 
 
 
@@ -86,7 +87,7 @@
           // Push the marker to our array of markers.
           markers.push(marker);
           // Create an onclick event to open an infowindow at each marker.
-          marker.addListener('click', function() {
+          marker.addListener('click',function() {
               populateInfoWindow(this, largeInfowindow);
           });
           marker.addListener('mouseover', function() {
@@ -95,7 +96,10 @@
           marker.addListener('mouseout', function() {
               this.setIcon(defultIcon);
           });
+		   
       }
+
+      
       showListings();
       google.maps.event.addListener(marker, 'click', function() {
 
@@ -151,9 +155,19 @@
           infowindow.addListener('closeclick', function() {
               infowindow.marker = null;
           });
+		  
+		  marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                marker.setAnimation(null);
+            },2000);
       }
   };
-
+  
+function populateAndBounceMarker () {
+       this.populateInfoWindow(this, this.largeInfowindow);
+       
+        
+    };
 
   // This function will loop through the markers array and display them all.
   function showListings() {
@@ -165,7 +179,12 @@
       }
       map.fitBounds(bounds);
   }
-
+  
+  function hideListings() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+  };
 
 
   //change the marker style
@@ -179,12 +198,126 @@
           new google.maps.Size(21, 34));
       return markerImage;
   };
-
+function showContent(title) {
+    for(var x = 0; x < markers.length; x++) {
+        if (markers[x].title.indexOf(title) >= 0){
+            console.log('found: ' + title);
+           
+              this.populateInfoWindow(this, this.largeInfowindow);
+        }
+    }
+}
   function AppViewModel() {
+	this.locationList = ko.observableArray(locations);
+	/* this.userInput = ko.observable('');
 
-  };
+     Filter Functionality for List View 
+    this.filteredList = ko.computed (function () {
+        return ko.utils.arrayFilter(this.locationList, function(loc) {
+           if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
+                loc.marker.setVisible(true);
+                return true;
+            } else {
+                loc.marker.setVisible(false);
+                return false;
+            }
+        });
+    });*/
+};
+	
 
+	
+	
+	/*this.searchTerm = ko.observable("");
+
+	this.locationList = ko.observableArray([]);
+	locations.forEach(function(locationItem){
+		this.locationList.push( new Location(locationItem));
+	});
+
+	this.filteredList = ko.computed( function() {
+		var filter = self.searchTerm().toLowerCase();
+		if (!filter) {
+			self.locationList().forEach(function(locationItem){
+				locationItem.visible(true);
+			});
+			return self.locationList();
+		} else {
+			return ko.utils.arrayFilter(self.locationList(), function(locationItem) {
+				var string = locationItem.name.toLowerCase();
+				var result = (string.search(filter) >= 0);
+				locationItem.visible(result);
+				return result;
+			});
+		}
+	}, self);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	/*this.userInput = ko.observable('');
+	
+	this.filteredList = ko.computed (function () {
+        return ko.utils.arrayFilter(this.locationList(), function(loc) {
+           if (loc.name().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
+                loc.marker.setVisible(true);
+                return true;
+            } else {
+                loc.marker.setVisible(false);
+                return false;
+            }
+        });
+	
+	
+	
+});
+
+ this.locationClicked = function (loc) {
+        this.openInfoWindow(loc.marker);
+    };
+/*this.filteredShops = ko.computed(function() {
+        var result = [];
+        for (var i = 0; i < this.markers.length; i++) {
+            var shop = this.markers[i];
+            if (shop.title.toLowerCase().includes(this.filterText().toLowerCase())) {
+                result.push(shop);
+                this.markers[i].setVisible(true);
+            } else {
+                this.markers[i].setVisible(false);
+            }
+        }
+
+        return result;
+    }, AppViewModel);
+	
+	/*this.filterText = ko.observable("");
+	
+	this.filteredlocation = ko.computed(function() {
+		if (!filter) {
+			return this.locationList;
+		}		
+		else {
+			ko.utils.arrayFilter(this.filteredLocationList, function(place){
+				return ko.utils.stringStartsWith(place.location.toLowerCase(), this.filterText());
+			});
+
+		}
+	
+});*/
+
+  
+	
+
+
+  var appVm = new AppViewModel();
 
   function startApp() {
-      ko.applyBindings(new AppViewModel());
+      ko.applyBindings(appVm);
   };
+  
+startApp();

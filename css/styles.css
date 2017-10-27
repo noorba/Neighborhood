@@ -1,98 +1,32 @@
+
+#map {
  
-.container{
-   width: 100%;
-  margin: 0 auto;
-  margin-top:50px;
-}
-	 html,
-body {
   height: 100%;
-}
-#map,
-#wrapper,
-#page-content-wrapper {
-  height: 100%;
-  width: 100%;
-}
-.container-fluid,
-.row,
-.col-lg-12 {
-  height: 100%;
-  width: 100%;
-}	   
-
-.nav-tabs>li {
-  float: none;
-}
-.nav-tabs {
-  border-bottom: 0;
+  left: 0px;
+  position: absolute;
+  right: 0px;
+ 
 }
 
-#wrapper {
-  padding-left: 0;
+/*----- Mobile: max-width 770px like iPad -----*/
+@media screen and (max-width: 770px) {
+  #map {
+    left:0px;
+  }
+
+}
+/*----- Mobile: max-width 415px like iPhone 6 Plus -----*/
+@media screen and (max-width: 415px) {
+  .options-box {
+    width: 190px;
+    padding: 0 0 0;
+ 
   
 }
-#wrapper {
-  padding-left: 250px;
-}
-#sidebar-wrapper {
-  
-  position: fixed;
-  left: 250px;
-  width: 0;
-  height: 100%;
-  margin-left: -250px;
-  overflow-y: auto;
-  background: #000;
-  
-}
-#wrapper #sidebar-wrapper {
-  width: 250px;
-}
-#page-content-wrapper {
-  width: 100%;
-  position: absolute;
-  padding: 15px;
-}
-#wrapper. #page-content-wrapper {
-  position: absolute;
-  margin-right: -250px;
-}
-/* Sidebar Styles */
-
-.sidebar-nav {
-  position: absolute;
-  top: 0;
-  width: 250px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.sidebar-nav li {
-  text-indent: 20px;
-  line-height: 40px;
-}
-
-
-@media(min-width:768px) {
-  #wrapper {
-    padding-left: 250px;
+/*---- Mobile: max-width 360px like Google Nexus 5 ---------*/
+@media screen and (max-width: 360px) {
+  .options-box {
+    width: 145px;
   }
-  #wrapper.toggled {
-    padding-left: 0;
-  }
-  #sidebar-wrapper {
-    width: 250px;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    width: 0;
-  }
-  #page-content-wrapper {
-    padding: 20px;
-    position: relative;
-  }
-  #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0;
-  }
-}	
+ 
+}
