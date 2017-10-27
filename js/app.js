@@ -161,6 +161,7 @@
                 marker.setAnimation(null);
             },2000);
       }
+	  
   };
   
 function populateAndBounceMarker () {

@@ -5,13 +5,14 @@
   left: 0px;
   position: absolute;
   right: 0px;
- 
+   position: relative;
 }
 
 /*----- Mobile: max-width 770px like iPad -----*/
 @media screen and (max-width: 770px) {
   #map {
     left:0px;
+	  position: relative;
   }
 
 }
