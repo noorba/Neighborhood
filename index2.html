@@ -21,8 +21,11 @@
         <input class="search-box" placeholder="Filter Location" data-bind="value: userInput, valueUpdate: 'keyup'">
 
 
-        <ul data-bind="foreach: filteredList">
-            <li data-bind="text: title ,click: $parent.populateAndBounceMarker"></li>
+        <ul data-bind="foreach: locationList">
+            <li >
+			 <a    href="#" class="w3-bar-item w3-button"data-bind="text: title, click: $parent.populateAndBounceMarker"></a>
+			
+	</li>
         </ul>
     </div>
 

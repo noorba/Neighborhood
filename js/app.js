@@ -1,45 +1,45 @@
   var map;
   // Create a new blank array for all the listing markers.
   var markers = [];
-  var locations = [{
+ var locations = [{
 
 
-          title: 'Akihabara',
-          lat: 35.7022051,
-          lng: 139.7741464,
+              title: 'Akihabara',
+              lat: 35.7022051,
+              lng: 139.7741464,
 
-      },
-      {
-          title: 'Shibuya',
+          },
+          {
+              title: 'Shibuya',
 
-          lat: 35.6617773,
-          lng: 139.7040506
+              lat: 35.6617773,
+              lng: 139.7040506
 
-      },
-      {
-          title: 'Tokyo Imperial Palace',
+          },
+          {
+              title: 'Tokyo Imperial Palace',
 
-          lat: 35.685175,
-          lng: 139.7527995
+              lat: 35.685175,
+              lng: 139.7527995
 
-      },
-      {
-          title: 'Fuji-San',
+          },
+          {
+              title: 'Fuji-San',
 
-          lat: 35.62504620000001,
-          lng: 139.7754533
+              lat: 35.62504620000001,
+              lng: 139.7754533
 
-      },
-      {
-          title: 'Sky Tree Tower',
+          },
+          {
+              title: 'Sky Tree Tower',
 
-          lat: 35.7100627,
-          lng: 139.8107004
+              lat: 35.7100627,
+              lng: 139.8107004
 
-      }
-  ];
-
-
+          }
+      ];
+	  
+	
 
   function initMap() {
       // Constructor creates a new map - only center and zoom are required.
@@ -51,15 +51,11 @@
           zoom: 13,
           mapTypeControl: false
       });
+	  
 
 
 
-
-      window.onresize = function() {
-          var currCenter = map.getCenter();
-          google.maps.event.trigger(map, 'resize');
-          map.setCenter(currCenter);
-      };
+     
 
 
 
@@ -92,7 +88,7 @@
           // Push the marker to our array of markers.
           markers.push(marker);
           // Create an onclick event to open an infowindow at each marker.
-          marker.addListener('click', function() {
+          marker.addListener('click',function() {
               populateInfoWindow(this, largeInfowindow);
           });
           marker.addListener('mouseover', function() {
@@ -101,10 +97,10 @@
           marker.addListener('mouseout', function() {
               this.setIcon(defultIcon);
           });
-
+		   
       }
 
-
+      
       showListings();
       google.maps.event.addListener(marker, 'click', function() {
 
@@ -113,8 +109,8 @@
 
 
   }
-
-
+  
+  
   // This function populates the infowindow when the marker is clicked.
   function populateInfoWindow(marker, infowindow) {
       if (infowindow.marker != marker) {
@@ -136,8 +132,8 @@
               this.city = response.location.formattedAddress[1];
               this.country = response.location.formattedAddress[3];
               this.category = response.categories[0].shortName;
-
-
+			  
+		
 
               this.htmlContentFoursquare =
                   '<h5>(' + this.category +
@@ -147,9 +143,9 @@
                   '<p>' + this.city + '</p>' +
                   '<p>' + this.country +
                   '</p>' + '</div>' + '</div>';
+				  
 
-
-              infowindow.setContent(this.htmlContentFoursquare);
+              infowindow.setContent( this.htmlContentFoursquare);
           }).fail(function() {
               // Send alert
               alert(
@@ -162,20 +158,24 @@
           infowindow.addListener('closeclick', function() {
               infowindow.marker = null;
           });
-
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(function() {
-              marker.setAnimation(null);
-          }, 2000);
+		  
+		  marker.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function () {
+                marker.setAnimation(null);
+            },2000);
       }
-
+	  
   };
+  
+function populateAndBounceMarker () {
+     google.maps.event.addListener(marker, 'click', function() {
+		 console.log("click");
 
-  function populateAndBounceMarker() {
-      this.populateInfoWindow(this, this.largeInfowindow);
-
-
-  };
+          largeInfowindow.open(map, marker);
+      });
+       
+        
+    };
 
   // This function will loop through the markers array and display them all.
   function showListings() {
@@ -187,11 +187,11 @@
       }
       map.fitBounds(bounds);
   }
-
+  
   function hideListings() {
-      for (var i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
-      }
+        }
   };
 
 
@@ -206,44 +206,44 @@
           new google.maps.Size(21, 34));
       return markerImage;
   };
-  /*nction showContent(title) {
-      for(var x = 0; x < markers.length; x++) {
-          if (markers[x].title.indexOf(title) >= 0){
-              console.log('found: ' + title);
-             
-                this.populateInfoWindow(this, this.largeInfowindow);
-          }
-      }
-  }*/
+/*nction showContent(title) {
+    for(var x = 0; x < markers.length; x++) {
+        if (markers[x].title.indexOf(title) >= 0){
+            console.log('found: ' + title);
+           
+              this.populateInfoWindow(this, this.largeInfowindow);
+        }
+    }
+}*/
 
 
   function AppViewModel() {
-      this.locationList = ko.observableArray(locations);
-      this.userInput = ko.observable("");
+	this.locationList = ko.observableArray(locations);
+	this.userInput = ko.observable("");
+	
+	  this.filteredList = ko.computed (function () {
+        return ko.utils.arrayFilter(this.locationList, function(loc) {
+           if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
+                loc.marker.setVisible(true);
+                return true;
+            } else {
+                loc.marker.setVisible(false);
+                return false;
+            }
+        });
+    });
 
-      this.filteredList = ko.computed(function() {
-          return ko.utils.arrayFilter(this.locationList, function(loc) {
-              if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
-                  loc.marker.setVisible(true);
-                  return true;
-              } else {
-                  loc.marker.setVisible(false);
-                  return false;
-              }
-          });
-      });
+	//Trigger click event when location is clicked from list view.
+    this.locationClicked = function (loc) {
+        this.openInfoWindow(loc.marker);
+    };
+	
+};
+	
 
-      //Trigger click event when location is clicked from list view.
-      this.locationClicked = function(loc) {
-          this.openInfoWindow(loc.marker);
-      };
-
-  };
-
-
-
-
-  /*this.searchTerm = ko.observable("");
+	
+	
+	/*this.searchTerm = ko.observable("");
 
 	this.locationList = ko.observableArray([]);
 	locations.forEach(function(locationItem){
@@ -283,11 +283,12 @@
             }
         });
     });*/
-
-
-
-
-  /*this.userInput = ko.observable('');
+	
+	
+	
+	
+	
+	/*this.userInput = ko.observable('');
 	
 	this.filteredList = ko.computed (function () {
         return ko.utils.arrayFilter(this.locationList(), function(loc) {
@@ -337,7 +338,8 @@
 	
 });*/
 
-
+  
+	
 
 
   var appVm = new AppViewModel();
@@ -345,8 +347,8 @@
   function startApp() {
       ko.applyBindings(appVm);
   };
-
-  startApp();
+  
+startApp();
 
 
   function mapError() {
