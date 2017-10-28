@@ -6,20 +6,21 @@
     <title>Tokyo Best places</title>
     <!-- CSS File  -->
     <link href="css/styles.css" rel="stylesheet">
-    <!-- google font  -->
-    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!-- javascript File  -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    
+   
 </head>
 <body>
 <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
   <button class="w3-bar-item w3-button w3-large"
   onclick="w3_close()">Close &times;</button>
-   <p class="text">To Find a specific location use the search box.</p>
-            <input class="searchbox" type="search" placeholder="Station location" autocomplete="off">
-            <ul data-bind="foreach: locationList">
+   <p class="text">search locations</p>
+            <input class = "search-box" placeholder = "Filter Location" data-bind = "value: userInput, valueUpdate: 'keyup'">
+		
+        
+			<ul data-bind="foreach: filteredList">
                 <li data-bind="text: title ,click: $parent.populateAndBounceMarker"></li>
             </ul>
 </div>

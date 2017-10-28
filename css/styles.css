@@ -7,6 +7,13 @@
   right: 0px;
    position: relative;
 }
+#w3-sidebar{
+	
+	 position: relative;
+	
+}
+
+
 
 /*----- Mobile: max-width 770px like iPad -----*/
 @media screen and (max-width: 770px) {

@@ -1,6 +1,4 @@
   var map;
-
- // var self = this;
   // Create a new blank array for all the listing markers.
   var markers = [];
  var locations = [{
@@ -41,6 +39,8 @@
           }
       ];
 	  
+	
+
   function initMap() {
       // Constructor creates a new map - only center and zoom are required.
       map = new google.maps.Map(document.getElementById('map'), {
@@ -199,7 +199,7 @@ function populateAndBounceMarker () {
           new google.maps.Size(21, 34));
       return markerImage;
   };
-function showContent(title) {
+/*nction showContent(title) {
     for(var x = 0; x < markers.length; x++) {
         if (markers[x].title.indexOf(title) >= 0){
             console.log('found: ' + title);
@@ -207,13 +207,14 @@ function showContent(title) {
               this.populateInfoWindow(this, this.largeInfowindow);
         }
     }
-}
+}*/
+
+
   function AppViewModel() {
 	this.locationList = ko.observableArray(locations);
-	/* this.userInput = ko.observable('');
-
-     Filter Functionality for List View 
-    this.filteredList = ko.computed (function () {
+	this.userInput = ko.observable("");
+	
+	  this.filteredList = ko.computed (function () {
         return ko.utils.arrayFilter(this.locationList, function(loc) {
            if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
                 loc.marker.setVisible(true);
@@ -223,7 +224,13 @@ function showContent(title) {
                 return false;
             }
         });
-    });*/
+    });
+
+	//Trigger click event when location is clicked from list view.
+    this.locationClicked = function (loc) {
+        this.openInfoWindow(loc.marker);
+    };
+	
 };
 	
 
@@ -255,7 +262,20 @@ function showContent(title) {
 
 	
 	
-	
+	/* this.userInput = ko.observable('');
+
+     Filter Functionality for List View 
+    this.filteredList = ko.computed (function () {
+        return ko.utils.arrayFilter(this.locationList, function(loc) {
+           if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
+                loc.marker.setVisible(true);
+                return true;
+            } else {
+                loc.marker.setVisible(false);
+                return false;
+            }
+        });
+    });*/
 	
 	
 	
