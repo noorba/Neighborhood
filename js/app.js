@@ -51,6 +51,7 @@
           zoom: 13,
           mapTypeControl: false
       });
+	  
 
 
 
@@ -60,8 +61,8 @@
 
 
       //orrigianl marker color TO DO Change it color
-      var defultIcon = makeMarkerIcon('FFFF24');
-      var highLightedIcont = makeMarkerIcon('0091ff');
+      var defultIcon = makeMarkerIcon('FFFFff');
+      var highLightedIcont = makeMarkerIcon('009688');
 
       var largeInfowindow = new google.maps.InfoWindow();
       // The following group uses the location array to create an array of markers on initialize.
@@ -108,6 +109,8 @@
 
 
   }
+  
+  
   // This function populates the infowindow when the marker is clicked.
   function populateInfoWindow(marker, infowindow) {
       if (infowindow.marker != marker) {
@@ -342,3 +345,8 @@ function populateAndBounceMarker () {
   };
   
 startApp();
+
+
+    function mapError() {
+	alert("Google map failed check your intrenet connection")
+};
