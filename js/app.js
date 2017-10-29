@@ -53,10 +53,11 @@ function initMap() {
     });
 
 
-    //change marker color
+  //change marker color
     var defultIcon = makeMarkerIcon('FFFFff');
     var highLightedIcont = makeMarkerIcon('009688');
-
+	
+	
     var largeInfowindow = new google.maps.InfoWindow();
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
@@ -82,6 +83,7 @@ function initMap() {
         appVm.locationList()[i].marker = marker;
         // Push the marker to our array of markers.
         markers.push(marker);
+		
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
@@ -95,8 +97,14 @@ function initMap() {
 
     }
 
-
-    showListings();
+     // Extend the boundaries of the map for each marker and display the marker
+    var bounds = new google.maps.LatLngBounds();
+	// This for loop will loop through the markers array and display them all.
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+        bounds.extend(markers[i].position);
+    }
+    map.fitBounds(bounds);
 
     google.maps.event.addListener(marker, 'click', function() {
 
@@ -165,16 +173,7 @@ function populateInfoWindow(marker, infowindow) {
 
 
 
-// This function will loop through the markers array and display them all.
-function showListings() {
-    var bounds = new google.maps.LatLngBounds();
-    // Extend the boundaries of the map for each marker and display the marker
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-        bounds.extend(markers[i].position);
-    }
-    map.fitBounds(bounds);
-}
+
 
 
 
