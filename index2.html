@@ -23,7 +23,7 @@
 
         <ul data-bind="foreach: locationList">
             <li >
-			 <a    href="#" class="w3-bar-item w3-button"data-bind="text: title, click: $parent.populateAndBounceMarker"></a>
+			 <a    href="#" class="w3-bar-item w3-button"data-bind="text: title, click: $parent.locationClicked"></a>
 			
 	</li>
         </ul>
@@ -38,12 +38,13 @@
 
             </div>
         </div>
+		 <div id="map"></div>
 
 
 
         <div class="w3-container">
 
-            <div id="map"></div>
+           
 
         </div>
 

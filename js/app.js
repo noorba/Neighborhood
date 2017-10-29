@@ -53,14 +53,7 @@
       });
 	  
 
-
-
-     
-
-
-
-
-      //orrigianl marker color TO DO Change it color
+  //change marker color
       var defultIcon = makeMarkerIcon('FFFFff');
       var highLightedIcont = makeMarkerIcon('009688');
 
@@ -102,6 +95,7 @@
 
       
       showListings();
+
       google.maps.event.addListener(marker, 'click', function() {
 
           largeInfowindow.open(map, marker);
@@ -153,9 +147,9 @@
               );
           });
           // to open each infowindow in the rigt postion 
-          infowindow.open(map, marker);
+         infowindow.open(map, marker);
 
-          infowindow.addListener('closeclick', function() {
+         infowindow.addListener('closeclick', function() {
               infowindow.marker = null;
           });
 		  
@@ -221,6 +215,7 @@ function populateAndBounceMarker () {
 	this.locationList = ko.observableArray(locations);
 	this.userInput = ko.observable("");
 	
+
 	  this.filteredList = ko.computed (function () {
         return ko.utils.arrayFilter(this.locationList, function(loc) {
            if (loc.title().toLowerCase().indexOf(this.userInput().toLowerCase()) >= 0) {
@@ -234,13 +229,15 @@ function populateAndBounceMarker () {
     });
 
 	//Trigger click event when location is clicked from list view.
-    this.locationClicked = function (loc) {
-        this.openInfoWindow(loc.marker);
-    };
-	
+    this.locationClicked = function () {
+       console.log("clicked");
+	 
+		 google.maps.event.trigger(marker, 'click')
+        console.log("1");	
+	 }	;	
 };
 	
-
+ 
 	
 	
 	/*this.searchTerm = ko.observable("");
@@ -343,6 +340,7 @@ function populateAndBounceMarker () {
 
 
   var appVm = new AppViewModel();
+
 
   function startApp() {
       ko.applyBindings(appVm);
