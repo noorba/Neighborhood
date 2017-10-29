@@ -1,3 +1,5 @@
+loopfunc: true 
+
 var map;
 // Create a new blank array for all the listing markers.
 var markers = [];
@@ -79,19 +81,19 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-
+	
         appVm.locationList()[i].marker = marker;
         // Push the marker to our array of markers.
         markers.push(marker);
 		
         // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
+        this.marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
         });
-        marker.addListener('mouseover', function() {
+        this.marker.addListener('mouseover', function() {
             this.setIcon(highLightedIcont);
         });
-        marker.addListener('mouseout', function() {
+       this. marker.addListener('mouseout', function() {
             this.setIcon(defultIcon);
         });
 
@@ -100,7 +102,7 @@ function initMap() {
      // Extend the boundaries of the map for each marker and display the marker
     var bounds = new google.maps.LatLngBounds();
 	// This for loop will loop through the markers array and display them all.
-    for (var i = 0; i < markers.length; i++) {
+    for (i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
         bounds.extend(markers[i].position);
     }
@@ -169,7 +171,7 @@ function populateInfoWindow(marker, infowindow) {
         }, 2000);
     }
 
-};
+}
 
 
 
@@ -188,7 +190,7 @@ function makeMarkerIcon(markerColor) {
         new google.maps.Point(10, 34),
         new google.maps.Size(21, 34));
     return markerImage;
-};
+}
 
 
 
@@ -216,10 +218,10 @@ function AppViewModel() {
 
     this.locationClicked = function(loc) {
 
-        google.maps.event.trigger(loc.marker, 'click') // instead of marker, use loc.marker
+        google.maps.event.trigger(loc.marker, 'click'); // instead of marker, use loc.marker
         console.log("1");
     };
-};
+}
 
 
 
@@ -229,11 +231,11 @@ var appVm = new AppViewModel();
 
 function startApp() {
     ko.applyBindings(appVm);
-};
+}
 
 startApp();
 
 
 function mapError() {
-    alert("Google map failed check your intrenet connection")
-};
+    alert("Google map failed check your intrenet connection");
+}
