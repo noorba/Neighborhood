@@ -1,4 +1,4 @@
-loopfunc: true 
+loopfunc: true;
 
 var map;
 // Create a new blank array for all the listing markers.
