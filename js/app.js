@@ -1,5 +1,3 @@
-loopfunc: true;
-
 var map;
 // Create a new blank array for all the listing markers.
 var markers = [];
@@ -55,11 +53,21 @@ function initMap() {
     });
 
 
-  //change marker color
+    //change marker color
     var defultIcon = makeMarkerIcon('FFFFff');
     var highLightedIcont = makeMarkerIcon('009688');
-	
-	
+
+    this.pop = function() {
+        populateInfoWindow(this, largeInfowindow);
+    };
+	//set Marker colors
+    this.hiehlightedMarker = function() {
+        this.setIcon(highLightedIcont);
+    };
+    this.defultMarker = function() {
+        this.setIcon(defultIcon);
+    };
+
     var largeInfowindow = new google.maps.InfoWindow();
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
@@ -81,27 +89,24 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             id: i
         });
-	
+
         appVm.locationList()[i].marker = marker;
         // Push the marker to our array of markers.
         markers.push(marker);
-		
+
         // Create an onclick event to open an infowindow at each marker.
-        this.marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-        });
-        this.marker.addListener('mouseover', function() {
-            this.setIcon(highLightedIcont);
-        });
-       this. marker.addListener('mouseout', function() {
-            this.setIcon(defultIcon);
-        });
+		//Marker Listener
+        this.marker.addListener('click', pop);
+        this.marker.addListener('mouseover', hiehlightedMarker);
+        this.marker.addListener('mouseout', defultMarker);
 
     }
 
-     // Extend the boundaries of the map for each marker and display the marker
+
+
+    // Extend the boundaries of the map for each marker and display the marker
     var bounds = new google.maps.LatLngBounds();
-	// This for loop will loop through the markers array and display them all.
+    // This for loop will loop through the markers array and display them all.
     for (i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
         bounds.extend(markers[i].position);
@@ -172,10 +177,6 @@ function populateInfoWindow(marker, infowindow) {
     }
 
 }
-
-
-
-
 
 
 
